@@ -15,7 +15,6 @@ Dataset_Base::~Dataset_Base()
 	delete mRefBased;
 	delete mRefSecondary;
 	delete mRatings;
-	delete mRatingsTest;
 	delete mSim;
 	delete mSimFunction;
 	mFs.close();
@@ -118,16 +117,10 @@ mat* Dataset_Base::GetRatings()
 	return mRatings->clone();
 }
 
-mat* Dataset_Base::GetRatingsTest()
-{
-	return mRatingsTest->clone();
-}
-
 int Dataset_Base::Process()
 {
 	cout << "**********Information of dataset**********" << endl;
 	LoadRatings();
-	RemovingRatingsForTest(PERC_REMOVAL_RATINGS); 
 	PrintReferences();
 	cout << "**********End of dataset**********" << endl;
 
@@ -138,45 +131,6 @@ int Dataset_Base::Process()
 	mSim = mSimFunction->GetMatrix();
 
 	return 0;
-}
-
-void Dataset_Base::RemovingRatingsForTest(double perc)
-{
-	int qtd_datapoints = mRatings->size();
-	int qtd_ratings, tRandom, iSecret;
-	double value;
-	map<int, double>::iterator itLine;
-	int qtd_removal_points;
-
-	mRatingsTest = new mat(mRatings->size());
-
-
-	for (int i = 0; i < qtd_datapoints; ++i)
-	{
-		qtd_ratings = mRatings->getLine(i)->size();
-		// cout << "user " << i << ": " << qtd_ratings << " ratings";
-		qtd_removal_points = ceil(qtd_ratings * perc);
-		// cout << " --> " << "Removed: " << qtd_removal_points << endl;
-
-
-		// mRatingsTest->addLine();		
-
-		// removing randomly
-		for (int j = 0; j < qtd_removal_points; j++)
-		{
-			iSecret = rand() % qtd_ratings; // random id choice
-			itLine = mRatings->getLine(i)->begin();
-			advance(itLine, iSecret); // advance in iterator
-			tRandom = itLine->first;
-			value = mRatings->getLine(i)->at(tRandom);
-			mRatings->getLine(i)->erase(tRandom);
-			mRatingsTest->set(i,tRandom,value);
-			qtd_ratings = mRatings->getLine(i)->size();
-		}
-		
-		// cout << "user " << i << " [train]: " << mRatings->getLine(i)->size() << " rating(s)" << endl;
-		// cout << "user " << i << " [test]: " << mRatingsTest->getLine(i)->size() << " rating(s)" << endl;
-	}
 }
 
 void Dataset_Base::PrintReferences()

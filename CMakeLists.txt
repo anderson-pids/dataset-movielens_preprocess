@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5.0)
-project(clustering)
+project(preprocess)
 include_directories(include)
 
 #Set debug flag
@@ -34,9 +34,9 @@ list(APPEND SOURCES cpp/similarities/loglikelihood.cpp)
 #However, the file(GLOB...) allows for wildcard additions:
 #file(GLOB_RECURSE SOURCES "cpp/*.cpp")
 
-add_executable(clustering ${SOURCES})
+add_executable(preprocess ${SOURCES})
 
 #Set name of executable
-set_target_properties(clustering PROPERTIES OUTPUT_NAME preprocess.out PREFIX "")
+set_target_properties(preprocess PROPERTIES OUTPUT_NAME preprocess.out PREFIX "")
 
-target_compile_features(clustering PRIVATE cxx_range_for)
+target_compile_features(preprocess PRIVATE cxx_range_for)

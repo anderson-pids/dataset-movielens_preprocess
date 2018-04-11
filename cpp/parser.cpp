@@ -103,7 +103,6 @@ void Parser::Process()
 	mDatasetBase->Process();
 	mSimMatrix = mDatasetBase->GetMatrix();
 	mRatings = mDatasetBase->GetRatings();
-	mRatingsTest = mDatasetBase->GetRatingsTest();
 
 	delete mDatasetBase;
 }
@@ -116,9 +115,4 @@ mat* Parser::GetSimMatrix()
 mat* Parser::GetRatings()
 {
 	return mRatings;
-}
-
-mat* Parser::GetRatingsTest()
-{
-	return mRatingsTest;
 }

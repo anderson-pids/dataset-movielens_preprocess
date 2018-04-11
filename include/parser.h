@@ -22,7 +22,6 @@ public:
 	void Process();
 	mat* GetSimMatrix();
 	mat* GetRatings();
-	mat* GetRatingsTest();
 private:
 	
 	int mBased;
